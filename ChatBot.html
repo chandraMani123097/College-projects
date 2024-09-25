@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Chatbot</title>
+    <link rel="stylesheet" href="chatbot.css" />
+  </head>
+  <body>
+    <div class="chat-container">
+      <header>
+        <h1>Chat-bot</h1>
+      </header>
+      <div id="chatbox">
+        <div class="message bot-message">Hi, how can I assist you today?</div>
+      </div>
+      <div class="input-area">
+        <input type="text" id="user-input" placeholder="Type a message..." />
+        <button id="send-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm-1 14.5v-4H8l4.5-4.5L17 12h-3v4.5h-3z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script src="chatBot.js"></script>
+  </body>
+</html>

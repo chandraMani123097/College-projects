@@ -22,11 +22,10 @@ document
     document.getElementById("contactsList").appendChild(contactDiv);
 
     // Add event listener to delete button
-    contactDiv
-      .querySelector(".delete-btn")
-      .addEventListener("click", function () {
-        contactDiv.remove();
-      });
+
+    contactDiv.querySelector(".dlt-btn").addEventListener("click", function () {
+      contactDiv.remove();
+    });
 
     // Clear the input fields
     document.getElementById("contactForm").reset();
