@@ -1,66 +1,85 @@
-document.getElementById("send-btn").addEventListener("click", function () {
-  let userInput = document.getElementById("user-input").value;
-  if (userInput.trim() === "") return;
+const weatherApiKey = "07d7c08e7a497a7cc719b8c66f5e7447";
 
-  // Add user message to chatbox
-  addMessage(userInput, "user-message");
+const chatBox = document.getElementById("chat-box");
+const userInput = document.getElementById("user-input");
 
-  // Clear input field
-  document.getElementById("user-input").value = "";
-
-  // Generate bot reply
-  setTimeout(function () {
-    let botReply = generateBotReply(userInput);
-    addMessage(botReply, "bot-message");
-  }, 500);
-});
-
-function addMessage(message, className) {
-  let chatbox = document.getElementById("chatbox");
-  let messageElement = document.createElement("div");
-  messageElement.className = `message ${className}`;
-  messageElement.textContent = message;
-  chatbox.appendChild(messageElement);
-
-  // Auto scroll to the bottom
-  chatbox.scrollTop = chatbox.scrollHeight;
+// Function to add messages to the chat box
+function addMessage(content, className) {
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("message", className);
+  messageDiv.innerText = content;
+  chatBox.appendChild(messageDiv);
+  chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom after a new message
 }
 
-function generateBotReply(userInput) {
-  let inputLower = userInput.toLowerCase();
+// Function to handle user input
+function sendMessage() {
+  const userMessage = userInput.value;
 
-  if (inputLower.includes("hello") || inputLower.includes("hi")) {
-    return "Hello! How can I assist you today?";
-  } else if (inputLower.includes("how are you")) {
-    return "I'm just a bot, but I'm here to help you!";
-  } else if (inputLower.includes("What is AI?")) {
-    return "AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines that are programmed to think, learn, and perform tasks autonomously. AI can process data, recognize patterns, make decisions, and even adapt based on experience. Common examples include virtual assistants (like Siri), recommendation systems, and self-driving cars.";
-  } else if (inputLower.includes("do you know about technology")) {
-    return "Yes! I can help you with technology realted questions. you can ask freely";
-  } else if (inputLower.includes("name")) {
-    return "I'm your friendly chatbot!";
-  } else if (inputLower.includes("time")) {
-    return `The current time is ${new Date().toLocaleTimeString()}.`;
-  } else if (inputLower.includes("date")) {
-    return `Today's date is ${new Date().toLocaleDateString()}.`;
-  } else if (inputLower.includes("do you know about India")) {
-    return "Yes, India is a diverse country known for its rich culture, history, technological advancements, and vibrant democracy.";
-  } else if (inputLower.includes("bye")) {
-    return "Goodbye! Have a great day!";
-  } else if (inputLower.includes("help")) {
-    return "I can assist with general questions. What do you need help with?";
-  } else if (inputLower.includes("Tell me a joke")) {
-    return "ISure! Why don’t skeletons fight each other? Because they don’t have the guts!";
-  } else {
-    const randomFallbacks = [
-      "I'm not sure how to respond to that.",
-      "Can you ask in a different way?",
-      "I'm still learning, please bear with me.",
-      "That's an interesting question!",
-      "Let me think about that.",
-    ];
+  if (userMessage.trim() !== "") {
+    // Add user message to chat
+    addMessage(userMessage, "user-message");
 
-    const randomIndex = Math.floor(Math.random() * randomFallbacks.length);
-    return randomFallbacks[randomIndex];
+    // Check if the user is asking for weather information
+    const weatherPattern = /weather in (.*)/i;
+    const match = userMessage.match(weatherPattern);
+
+    if (match && match[1]) {
+      const city = match[1].trim();
+      getWeather(city);
+    } else {
+      getGeneralAnswer(userMessage);
+    }
+
+    userInput.value = ""; // Clear the input field after sending
+  }
+}
+
+// Function to fetch weather data from OpenWeatherMap
+async function getWeather(city) {
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}&units=metric`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (response.ok) {
+      const weather = data.weather[0].description;
+      const temp = data.main.temp;
+      const feelsLike = data.main.feels_like;
+      const cityName = data.name;
+
+      // Add bot response to chat
+      addMessage(
+        `The current weather in ${cityName} is ${weather}. The temperature is ${temp}°C and it feels like ${feelsLike}°C.`,
+        "bot-message"
+      );
+    } else {
+      addMessage(
+        `Sorry, I couldn't find weather information for "${city}".`,
+        "bot-message"
+      );
+    }
+  } catch (error) {
+    addMessage(
+      "Oops! Something went wrong while fetching the weather data.",
+      "bot-message"
+    );
+  }
+}
+
+// Function to fetch a general answer (Simulated for now)
+async function getGeneralAnswer(query) {
+  try {
+    // Simulating an API call with a basic response
+    const responseMessage =
+      "I don't have an answer for that right now. Please ask about the weather.";
+
+    // Add bot response to chat
+    addMessage(responseMessage, "bot-message");
+  } catch (error) {
+    addMessage(
+      "Sorry, I could not retrieve an answer for your query.",
+      "bot-message"
+    );
   }
 }

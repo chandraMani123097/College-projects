@@ -1,123 +1,156 @@
-/* General styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f4f4f9;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  padding: 0;
+  padding: 10px;
+
 }
 
+/* Chat Container */
 .chat-container {
-  background-color: #ffffffbb;
-  border-radius: 15px;
-  width: 90%;
+  width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
-/* Chatbox header styling */
-header {
-  background-color: #6200ea;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 18px;
-}
-
-/* Chatbox styling */
-#chatbox {
-  flex-grow: 1;
-  padding: 15px;
+/* Chat Box */
+.chat-box {
+  padding: 20px;
+  height: 400px;
   overflow-y: auto;
-  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+  position: relative;
+
 }
 
-.message {
-  margin: 10px 0;
+/* Input Area */
+.input-area {
+  display: flex;
+  border-top: 1px solid #eee;
   padding: 10px;
-  border-radius: 10px;
-  width: fit-content;
-  max-width: 80%;
+  background-color: #f9f9f9;
+  /* Slightly different background */
+}
+
+/* Input Field */
+input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  /* Light border */
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  /* Smooth transition */
+}
+
+input[type="text"]:focus {
+  border-color: #5cb85c;
+  /* Change border color on focus */
+}
+
+/* Button */
+button {
+  background-color: #1d8bf1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  /* Adjusted padding */
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+  /* Smooth transition */
+}
+
+button:hover {
+  background-color: #087ce8;
+}
+
+/* Message Styles */
+.message {
+  margin-bottom: 15px;
+  /* Reduced bottom margin */
+  padding: 10px;
+  border-radius: 5px;
+  line-height: 1.4;
+  /* Better readability */
 }
 
 .bot-message {
-  background-color: #e1ffc7;
+  background-color: #e7f3fe;
+  /* Light blue for bot messages */
+  color: #333;
+  /* Darker text for contrast */
   align-self: flex-start;
+  /* Align bot messages to the left */
 }
 
 .user-message {
-  background-color: #d1d1f7;
+  background-color: #5cb85c;
+  /* User's message color */
+  color: white;
+  text-align: right;
+  /* Align user's text to the right */
   align-self: flex-end;
+  /* Align user messages to the right */
 }
 
-/* Input area styling */
-.input-area {
-  display: flex;
-  padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
-}
-
-#user-input {
-  flex-grow: 1;
-  padding: 10px;
-  border: none;
-  outline: none;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  font-size: 16px;
-}
-
-#send-btn {
-  background-color: #6200ea;
-  border: none;
-  margin-left: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#send-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: #fff;
-}
-
-#send-btn:hover {
-  background-color: #3700b3;
-}
-
-/* Mobile-friendly adjustments */
-@media (max-width: 600px) {
+/* Responsive Design */
+@media screen and (max-width: 600px) {
   .chat-container {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
+    width: 95%;
+    /* Full width on smaller screens */
+    height: 90vh;
+    /* Adjust height for better usability */
   }
 
-  header h1 {
-    font-size: 16px;
+  .chat-box {
+    padding: 15px;
+    /* Less padding on smaller screens */
   }
 
-  #user-input {
+  input[type="text"] {
     font-size: 14px;
+    /* Smaller font size for input */
+  }
+
+  button {
+    font-size: 14px;
+    /* Smaller font size for button */
+  }
+
+  .message {
+    font-size: 14px;
+    /* Smaller font size for messages */
   }
 }
 
-/* Smooth scrolling */
-#chatbox {
-  scroll-behavior: smooth;
+/* Scrollbar Styling */
+.chat-box::-webkit-scrollbar {
+  width: 8px;
+  /* Width of scrollbar */
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background-color: #5cb85c;
+  /* Color of scrollbar thumb */
+  border-radius: 10px;
+  /* Rounded corners for scrollbar */
 }
